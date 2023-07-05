@@ -8,7 +8,13 @@ export default function RootNavigation() {
     return (
         <NavigationContainer>
             <Stack.Navigator>
-                <Stack.Screen name="LoadingScreen" component={LoadingScreen} />
+                <Stack.Screen
+                    name="LoadingScreen"
+                    component={LoadingScreen}
+                    options={{
+                        headerShown: false,
+                    }}
+                />
             </Stack.Navigator>
         </NavigationContainer>
     )
