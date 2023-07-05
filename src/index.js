@@ -1,6 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import LoadingScreen from "./screens/LoadingScreen";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
+import ListAllTasks from "./screens/ListAllTasks";
 
 const { createNativeStackNavigator } = require("@react-navigation/native-stack");
 const Stack = createNativeStackNavigator();
@@ -29,8 +30,8 @@ export function MainTabNavigator() {
     return (
         <MTBNavigator.Navigator>
             <MTBNavigator.Screen
-                name="Home"
-                component={HomeScreen}
+                name="ListScreen"
+                component={ListAllTasks}
                 options={{
                     title: "Início",
                 }}
