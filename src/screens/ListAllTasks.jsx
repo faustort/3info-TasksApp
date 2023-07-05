@@ -6,7 +6,7 @@ import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
 import { db } from "../config/firebase";
 
 
-export default function ListAllTasks() {
+export default function ListAllTasks({ navigation }) {
     const [tasks, setTasks] = useState([])
 
     useEffect(() => {
@@ -15,7 +15,7 @@ export default function ListAllTasks() {
 
     async function getTasks() {
         try {
-            const tasksRef = collection(db, 'usuarios');
+            const tasksRef = collection(db, 'tarefas');
             const querySnapshot = await getDocs(tasksRef);
             querySnapshot.forEach(
                 (doc) => {
@@ -32,23 +32,31 @@ export default function ListAllTasks() {
     }
 
     function deleteTask(id) {
-        
+
         // faço um filtro de array para remover o item que tem o id igual ao id passado
         const newTasks = tasks.filter(
             (task) => task.id !== id
         )
         setTasks(newTasks);
         // removo o item do banco de dados
-        const taskRef = doc(db, 'usuarios', id);
+        const taskRef = doc(db, 'tarefas', id);
         // deleteDoc retorna uma promise
         deleteDoc(taskRef);
     }
 
+
+    function sendToEditTaskScreen(item) {
+        navigation.navigate('EditTaskScreen', {
+            task: item
+        })
+    }
+
+
     const ListItemTask = ({ item }) => {
         return (
             <List.Item
-                title={item.nome}
-                description={item.email}
+                title={item.titulo}
+                description={item.descricao}
                 onPress={() => { }}
                 right={
                     props => (
@@ -56,6 +64,7 @@ export default function ListAllTasks() {
                             <TouchableRipple
                                 onPress={() => {
                                     // edit item
+                                    sendToEditTaskScreen(item);
                                     console.log("Editar")
                                 }}
                                 style={styles.rightButton}

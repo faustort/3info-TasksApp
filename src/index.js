@@ -5,6 +5,8 @@ import ListAllTasks from "./screens/ListAllTasks";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import AddTaskScreen from "./screens/AddTaskScreen";
+import EditTaskScreen from "./screens/EditTaskScreen";
 const Stack = createNativeStackNavigator();
 
 export default function RootNavigation() {
@@ -47,6 +49,30 @@ export function MainTabNavigator() {
                     headerShown: false,
                     tabBarIcon: () => <MaterialCommunityIcons
                         name="list-status"
+                        size={24}
+                    />
+                }}
+            />
+            <MTBNavigator.Screen
+                name="AddTaskScreen"
+                component={AddTaskScreen}
+                options={{
+                    title: "Adicionar Tarefa",
+                    headerShown: false,
+                    tabBarIcon: () => <MaterialCommunityIcons
+                        name="plus-circle"
+                        size={24}
+                    />
+                }}
+            />
+            <MTBNavigator.Screen
+                name="EditTaskScreen"
+                component={EditTaskScreen}
+                options={{
+                    title: "Editar Tarefa",
+                    headerShown: false,
+                    tabBarIcon: () => <MaterialCommunityIcons
+                        name="pencil"
                         size={24}
                     />
                 }}

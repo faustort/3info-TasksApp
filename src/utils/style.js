@@ -21,6 +21,9 @@ export const styles = StyleSheet.create({
         borderRadius: 25,
         alignItems: "center",
         justifyContent: "center",
-
+    },
+    divider: {
+        height: 10,
     }
+
 })
