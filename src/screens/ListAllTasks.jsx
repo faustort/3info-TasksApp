@@ -1,6 +1,6 @@
 import { FlatList, ScrollView, View } from "react-native";
 import { styles } from "../utils/style";
-import { Text } from "react-native-paper";
+import { List, Text, TouchableRipple } from "react-native-paper";
 import { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../config/firebase";
@@ -16,15 +16,66 @@ export default function ListAllTasks() {
     async function getTasks() {
         try {
             const tasksRef = collection(db, 'usuarios');
-            const querySnapshot = await getDocs(tasksRef)
+            const querySnapshot = await getDocs(tasksRef);
             querySnapshot.forEach(
                 (doc) => {
-                    console.log(doc.id, " => ", doc.data());
+                    const task = {
+                        id: doc.id,
+                        ...doc.data()
+                    }
+                    setTasks((oldTasks) => [...oldTasks, task])
                 }
             );
         } catch (error) {
             console.log(error);
         }
+    }
+
+    function deleteTask(id) {
+        
+    }
+
+    const ListItemTask = ({ item }) => {
+        return (
+            <List.Item
+                title={item.nome}
+                description={item.email}
+                onPress={() => { }}
+                right={
+                    props => (
+                        <>
+                            <TouchableRipple
+                                onPress={() => {
+                                    // edit item
+                                    console.log("Editar")
+                                }}
+                                style={styles.rightButton}
+                            >
+                                <List.Icon
+                                    {...props}
+                                    icon="file-edit"
+                                    size={60}
+
+                                />
+                            </TouchableRipple>
+                            <TouchableRipple
+                                onPress={() => {
+                                    // remove item
+                                    console.log("Remover")
+                                }}
+                                style={styles.rightButton}
+
+                            >
+                                <List.Icon
+                                    icon="trash-can"
+                                    size={60}
+                                />
+                            </TouchableRipple>
+                        </>
+                    )
+                }
+            />
+        )
     }
 
     return (
@@ -49,12 +100,19 @@ export default function ListAllTasks() {
                     }}
                 >
                     <FlatList
-                        data={[
-                            { key: 'Devin' },
-                            { key: 'Dan' },
-                            { key: 'Dominic' },
-                        ]}
-                        renderItem={({ item }) => <Text>{item.key}</Text>}
+                        data={tasks}
+                        renderItem={
+                            ({ item }) => {
+                                console.log(item);
+                                return (
+                                    <ListItemTask
+                                        key={item.id}
+                                        item={item}
+                                        onPress={() => { }}
+                                    />
+                                )
+                            }
+                        }
                     />
                 </ScrollView>
             </View>
