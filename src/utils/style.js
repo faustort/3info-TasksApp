@@ -14,5 +14,13 @@ export const styles = StyleSheet.create({
     },
     selfFullWidth: {
         alignSelf: "stretch",
+    },
+    rightButton: {
+        width: 50,
+        height: 50,
+        borderRadius: 25,
+        alignItems: "center",
+        justifyContent: "center",
+
     }
 })
