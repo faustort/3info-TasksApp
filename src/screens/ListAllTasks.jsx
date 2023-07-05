@@ -2,7 +2,7 @@ import { FlatList, ScrollView, View } from "react-native";
 import { styles } from "../utils/style";
 import { List, Text, TouchableRipple } from "react-native-paper";
 import { useEffect, useState } from "react";
-import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDocs, onSnapshot, query } from "firebase/firestore";
 import { db } from "../config/firebase";
 
 
@@ -10,8 +10,29 @@ export default function ListAllTasks({ navigation }) {
     const [tasks, setTasks] = useState([])
 
     useEffect(() => {
-        getTasks();
+        // getTasks();
     }, [])
+
+
+    useEffect(() => {
+        const q = query(collection(db, "tarefas"));
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+            const tasks = [];
+            querySnapshot.forEach(
+                (doc) => {
+                    const task = {
+                        id: doc.id,
+                        ...doc.data()
+                    }
+                    tasks.push(task);
+                }
+            );
+            setTasks(tasks);
+        });
+        // pare de escutar quando sair
+        return () => unsubscribe();
+    }, [])
+
 
     async function getTasks() {
         try {
