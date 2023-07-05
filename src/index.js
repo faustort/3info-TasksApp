@@ -3,7 +3,8 @@ import LoadingScreen from "./screens/LoadingScreen";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import ListAllTasks from "./screens/ListAllTasks";
 
-const { createNativeStackNavigator } = require("@react-navigation/native-stack");
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 const Stack = createNativeStackNavigator();
 
 export default function RootNavigation() {
@@ -16,6 +17,15 @@ export default function RootNavigation() {
 
                     options={{
                         title: "Carregando...",
+                        headerShown: false,
+                    }}
+                />
+                <Stack.Screen
+                    name="MainTabNavigator"
+                    component={MainTabNavigator}
+
+                    options={{
+                        title: "Lista de Tarefas",
                         headerShown: false,
                     }}
                 />
@@ -33,11 +43,14 @@ export function MainTabNavigator() {
                 name="ListScreen"
                 component={ListAllTasks}
                 options={{
-                    title: "Início",
+                    title: "Lista de Tarefas",
+                    headerShown: false,
+                    tabBarIcon: () => <MaterialCommunityIcons
+                        name="list-status"
+                        size={24}
+                    />
                 }}
             />
-
         </MTBNavigator.Navigator>
-
     )
 }
