@@ -31,6 +31,13 @@ export default function RootNavigation() {
                         headerShown: false,
                     }}
                 />
+                <Stack.Screen
+                    name="EditTaskScreen"
+                    component={EditTaskScreen}
+                    options={{
+                        title: "Editar Tarefa",
+                    }}
+                />
             </Stack.Navigator>
         </NavigationContainer>
     )
@@ -65,7 +72,7 @@ export function MainTabNavigator() {
                     />
                 }}
             />
-            <MTBNavigator.Screen
+            {/* <MTBNavigator.Screen
                 name="EditTaskScreen"
                 component={EditTaskScreen}
                 options={{
@@ -76,7 +83,7 @@ export function MainTabNavigator() {
                         size={24}
                     />
                 }}
-            />
+            /> */}
         </MTBNavigator.Navigator>
     )
 }
