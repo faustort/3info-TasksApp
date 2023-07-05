@@ -2,7 +2,7 @@ import { FlatList, ScrollView, View } from "react-native";
 import { styles } from "../utils/style";
 import { List, Text, TouchableRipple } from "react-native-paper";
 import { useEffect, useState } from "react";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
 import { db } from "../config/firebase";
 
 
@@ -33,6 +33,15 @@ export default function ListAllTasks() {
 
     function deleteTask(id) {
         
+        // faço um filtro de array para remover o item que tem o id igual ao id passado
+        const newTasks = tasks.filter(
+            (task) => task.id !== id
+        )
+        setTasks(newTasks);
+        // removo o item do banco de dados
+        const taskRef = doc(db, 'usuarios', id);
+        // deleteDoc retorna uma promise
+        deleteDoc(taskRef);
     }
 
     const ListItemTask = ({ item }) => {
@@ -52,16 +61,15 @@ export default function ListAllTasks() {
                                 style={styles.rightButton}
                             >
                                 <List.Icon
-                                    {...props}
                                     icon="file-edit"
                                     size={60}
-
                                 />
                             </TouchableRipple>
                             <TouchableRipple
                                 onPress={() => {
                                     // remove item
                                     console.log("Remover")
+                                    deleteTask(item.id);
                                 }}
                                 style={styles.rightButton}
 
